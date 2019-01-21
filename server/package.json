@@ -1,0 +1,25 @@
+{
+  "name": "frolfit-server",
+  "version": "0.0.1",
+  "description": "frolfit server package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch 'src/**/*' -e ts --exec ts-node ./index.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "@types/koa": "^2.0.48",
+    "apollo-server-koa": "^2.3.1",
+    "graphql": "^14.0.2",
+    "koa": "^2.6.2",
+    "koa-jwt": "^3.5.1"
+  }
+}
