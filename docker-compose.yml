@@ -1,0 +1,28 @@
+version: '3'
+services:
+  frolfit-server:
+    restart: unless-stopped
+    container_name: frolfit-server
+    build: ./server
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    volumes:
+      - ./server:/opt/frolfit-server
+      - /opt/frolfit-server/node_modules
+    environment:
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+    links:
+      - "frolfit-database:database"
+  # frolfit-client:
+  #   build: ./client
+  #   ports:
+  #     - "8000:8000"
+  frolfit-database:
+    container_name: frolfit-database
+    restart: unless-stopped
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: frolfit

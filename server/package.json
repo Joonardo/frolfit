@@ -5,21 +5,33 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch 'src/**/*' -e ts --exec ts-node ./index.ts"
+    "populate": "node -r ts-node/register populate.ts",
+    "start": "nodemon --watch 'src/**/*' -e ts --exec 'node --inspect -r ts-node/register ./src/index.ts'"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/faker": "^4.1.5",
+    "faker": "^4.1.0",
     "nodemon": "^1.18.9",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.1",
     "typescript": "^3.2.2"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "@types/graphql": "^14.0.7",
+    "@types/jsonwebtoken": "^8.3.2",
     "@types/koa": "^2.0.48",
     "apollo-server-koa": "^2.3.1",
-    "graphql": "^14.0.2",
+    "graphql": "^14.2.0",
+    "graphql-subscriptions": "^1.1.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.6.2",
-    "koa-jwt": "^3.5.1"
+    "koa-jwt": "^3.5.1",
+    "pg-promise": "^8.6.5",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^0.17.0",
+    "typedi": "^0.8.0"
   }
 }
