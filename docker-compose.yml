@@ -14,10 +14,19 @@ services:
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
     links:
       - "frolfit-database:database"
-  # frolfit-client:
-  #   build: ./client
-  #   ports:
-  #     - "8000:8000"
+  frolfit-client:
+    container_name: frolfit-client
+    restart: unless-stopped
+    build: ./client
+    volumes:
+      - ./client:/opt/frolfit-client
+      - /opt/frolfit-client/node_modules
+    stdin_open: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - "8080:8080"
   frolfit-database:
     container_name: frolfit-database
     restart: unless-stopped
