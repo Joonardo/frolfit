@@ -8,4 +8,6 @@ RUN npm install
 
 EXPOSE 8080
 
-CMD [ "npm", "run", "serve" ]
+ENTRYPOINT npm i && npm run serve
+
+# CMD [ "npm", "run", "serve" ]

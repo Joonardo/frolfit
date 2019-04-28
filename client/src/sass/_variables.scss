@@ -1,3 +1,15 @@
 // COLORS
 
 $color-primary: #fe4536;
+$color-blend: #fe6011;
+$color-secondary: #fea736;
+$color-black: #333;
+
+// BACKGROUNDS
+
+$bg-linear: linear-gradient(
+  to right,
+  $color-blend,
+  $color-primary,
+  $color-blend
+);
