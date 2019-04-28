@@ -21,3 +21,8 @@ export const loginRequest = async () => {
     return null;
   }
 }
+
+export const signupRequest = async (username: string, email: string) => {
+  const data = await sendPost(query.signupQuery, { username, email });
+  return <Player | null>data.user;
+}

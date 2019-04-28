@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <h1>FROLFIT</h1>
-    <div class="button-container" v-if="user === null">
-      <text-button>
-        Sign up
-      </text-button>
-      <text-button secondary>
-        Sign in
-      </text-button>
+    <div class="content" v-if="user === null">
+      <login-buttons
+        v-if="view === View.Start"
+        @signup="view = View.SignUp"
+        @signin="view = View.SignIn"
+      />
+      <sign-up-form v-else-if="view === View.SignUp" />
     </div>
   </div>
 </template>
@@ -17,12 +17,26 @@ import Vue from 'vue';
 import { mapState, mapMutations } from 'vuex';
 import { S_USER, M_SET_USER } from '../store';
 import { loginRequest } from '../utils/api';
-import TextButton from '@/components/basic/TextButton.vue';
+import LoginButtons from '@/components/login/LoginButtons.vue';
+import SignUpForm from '@/components/login/SignUpForm.vue';
+
+enum View {
+  Start,
+  SignUp,
+  SignIn
+}
 
 export default Vue.extend({
   name: 'Login',
   components: {
-    TextButton
+    LoginButtons,
+    SignUpForm
+  },
+  data: function() {
+    return {
+      View,
+      view: View.Start
+    };
   },
   computed: mapState({
     user: S_USER
@@ -42,9 +56,10 @@ export default Vue.extend({
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100vh;
   width: 100vw;
+  padding: 10rem 0;
   background-image: url('../assets/bg.png');
   background-size: contain;
 }
@@ -55,12 +70,7 @@ h1 {
   font-size: 8rem;
 }
 
-.button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 19rem;
-  height: 13rem;
+.content {
   margin: 0 auto;
 }
 </style>

@@ -22,4 +22,6 @@ export default Vue.extend({
 
 <style lang="scss">
 @import './sass/_base.scss';
+@import './sass/_animations.scss';
+@import './sass/_components.scss';
 </style>

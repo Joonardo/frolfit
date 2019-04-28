@@ -3,6 +3,8 @@ const userFields = `
   username
 `;
 
+//#region LOGIN
+
 export const loginQuery = `
   query Login {
     me {
@@ -10,3 +12,13 @@ export const loginQuery = `
     }
   }
 `;
+
+export const signupQuery = `
+  mutation SignUp ($username: String!, $email: String!) {
+    user: signup(username: $username, email: $email) {
+      ${userFields}
+    }
+  }
+`;
+
+//#endregion
