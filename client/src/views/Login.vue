@@ -7,7 +7,10 @@
         @signup="view = View.SignUp"
         @signin="view = View.SignIn"
       />
-      <sign-up-form v-else-if="view === View.SignUp" />
+      <sign-up-form
+        v-else-if="view === View.SignUp"
+        @back="view = View.Start"
+      />
     </div>
   </div>
 </template>

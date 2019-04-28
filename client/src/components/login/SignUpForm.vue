@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <p class="close-btn" @click="() => $emit('back')">X</p>
     <p class="error-text" v-if="error">An error occured. Try again.</p>
     <text-input text="Username" v-model="username" id="username" autofocus />
     <text-input text="Email" v-model="email" id="email" type="email" />
@@ -63,10 +64,19 @@ export default Vue.extend({
 .wrapper {
   display: grid;
   grid-gap: 2rem;
+  position: relative;
 }
 
 .button {
   justify-self: end;
   margin-top: 2rem;
+}
+
+.close-btn {
+  font-size: 2rem;
+  position: absolute;
+  top: -2rem;
+  right: 2rem;
+  cursor: pointer;
 }
 </style>
