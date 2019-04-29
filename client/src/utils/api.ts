@@ -23,6 +23,11 @@ export const loginRequest = async () => {
 }
 
 export const signupRequest = async (username: string, email: string) => {
-  const data = await sendPost(query.signupQuery, { username, email });
+  const data = await sendPost(query.signupMutation, { username, email });
   return <Player | null>data.user;
+}
+
+export const sendLoginLinkRequest = async (email: string) => {
+  const data = await sendPost(query.sendTokenLinkMutation, { email });
+  return <boolean>data.result;
 }

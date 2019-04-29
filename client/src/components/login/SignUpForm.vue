@@ -48,7 +48,7 @@ export default Vue.extend({
         this.error = false;
         try {
           const user = await signupRequest(this.username, this.email);
-          if (user) this.$emit('submitSuccess');
+          if (user) this.$emit('submitSuccess', this.email);
           else this.error = true;
         } catch (e) {
           this.error = true;
@@ -73,10 +73,8 @@ export default Vue.extend({
 }
 
 .close-btn {
-  font-size: 2rem;
   position: absolute;
   top: -2rem;
   right: 2rem;
-  cursor: pointer;
 }
 </style>

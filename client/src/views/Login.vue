@@ -10,6 +10,17 @@
       <sign-up-form
         v-else-if="view === View.SignUp"
         @back="view = View.Start"
+        @submitSuccess="handleSubmitSuccess"
+      />
+      <sign-in-form
+        v-else-if="view === View.SignIn"
+        @back="view = View.Start"
+        @submitSuccess="handleSubmitSuccess"
+      />
+      <link-send
+        v-else-if="view === View.LinkSend"
+        :email="email"
+        @back="view = View.Start"
       />
     </div>
   </div>
@@ -22,23 +33,29 @@ import { S_USER, M_SET_USER } from '../store';
 import { loginRequest } from '../utils/api';
 import LoginButtons from '@/components/login/LoginButtons.vue';
 import SignUpForm from '@/components/login/SignUpForm.vue';
+import SignInForm from '@/components/login/SignInForm.vue';
+import LinkSend from '@/components/login/LinkSend.vue';
 
 enum View {
   Start,
   SignUp,
-  SignIn
+  SignIn,
+  LinkSend
 }
 
 export default Vue.extend({
   name: 'Login',
   components: {
     LoginButtons,
-    SignUpForm
+    SignUpForm,
+    SignInForm,
+    LinkSend
   },
   data: function() {
     return {
       View,
-      view: View.Start
+      view: View.Start,
+      email: undefined as string | undefined
     };
   },
   computed: mapState({
@@ -47,7 +64,11 @@ export default Vue.extend({
   methods: {
     ...mapMutations({
       setUser: M_SET_USER
-    })
+    }),
+    handleSubmitSuccess(email: string): void {
+      this.email = email;
+      this.view = View.LinkSend;
+    }
   },
   mounted: async function() {
     this.setUser({ user: await loginRequest() });

@@ -48,8 +48,12 @@ button {
   &.secondary {
     background: transparent;
     color: $color-black;
-    border: solid 2px $color-black;
+    border: solid 1px $color-gray;
     padding: 1rem 1.6rem;
+
+    &:disabled {
+      opacity: 0.5;
+    }
 
     svg {
       fill: $color-black;
