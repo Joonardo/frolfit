@@ -4,9 +4,6 @@ services:
     restart: unless-stopped
     container_name: frolfit-server
     build: ./server
-    ports:
-      - "3000:3000"
-      - "9229:9229"
     volumes:
       - ./server:/opt/frolfit-server
       - /opt/frolfit-server/node_modules
@@ -25,8 +22,6 @@ services:
     tty: true
     environment:
       - CHOKIDAR_USEPOLLING=true
-    ports:
-      - "8080:8080"
   frolfit-database:
     container_name: frolfit-database
     restart: unless-stopped
@@ -35,3 +30,14 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_DB: frolfit
+  frolfit-ingress:
+    image: nginx:alpine
+    container_name: frolfit-ingress
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ingress:/etc/nginx/conf.d
+    links:
+      - "frolfit-server:frolfit-server"
+      - "frolfit-client:frolfit-client"

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Player } from './@types';
 import * as query from './queries';
 
-const API_URL = `${window.location.protocol}//${window.location.hostname}:3000/graphql`;
+const API_URL = `/api/graphql`;
 
 const sendPost = async (query: string, variables?: object) => {
   const data = await axios.post(API_URL, {
