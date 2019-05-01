@@ -33,4 +33,10 @@ export const tokenLoginMutation = `
   }
 `;
 
+export const logoutMutation = `
+  mutation Logout {
+    result: logout
+  }
+`;
+
 //#endregion

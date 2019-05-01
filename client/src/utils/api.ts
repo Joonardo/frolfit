@@ -38,3 +38,8 @@ export const tokenLoginRequest = async (token: string) => {
   const data = await sendPost(query.tokenLoginMutation, { token });
   return <boolean>data.result;
 }
+
+export const logoutRequest = async () => {
+  const data = await sendPost(query.logoutMutation);
+  return <boolean>data.result;
+}

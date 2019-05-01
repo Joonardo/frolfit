@@ -16,7 +16,9 @@ export default Vue.extend({
   components: {
     Login
   },
-  computed: mapState([S_USER])
+  computed: mapState({
+    user: S_USER
+  })
 });
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <navigation-drawer />
     <h1>FROLFIT</h1>
     <div class="accordion">
       <accordion-container
@@ -39,6 +40,7 @@
 import Vue from 'vue';
 import AccordionContainer from '@/components/basic/AccordionContainer.vue';
 import TextButton from '@/components/basic/TextButton.vue';
+import NavigationDrawer from '@/components/common/NavigationDrawer.vue';
 
 /* eslint-disable no-unused-vars */
 enum Accordion {
@@ -52,7 +54,8 @@ export default Vue.extend({
   name: 'Home',
   components: {
     AccordionContainer,
-    TextButton
+    TextButton,
+    NavigationDrawer
   },
   data: function() {
     return {
