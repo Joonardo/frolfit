@@ -1,16 +1,18 @@
 <template>
   <div class="menu">
     <menu-icon id="nav-drawer-icon" @click="open = !open" />
-    <div class="shadow" v-if="open">
-      <div class="drawer">
-        <ul class="nav-items">
-          <li><home-icon /> Home</li>
-          <li><courses-icon /> Courses</li>
-          <li><join-game-icon /> Join game</li>
-        </ul>
-        <p class="logout-btn" @click="handleLogoutClick">Logout</p>
+    <transition name="drawer">
+      <div class="shadow" v-if="open" @click.self="open = false">
+        <div class="drawer">
+          <ul class="nav-items">
+            <li><home-icon /> Home</li>
+            <li><courses-icon /> Courses</li>
+            <li><join-game-icon /> Join game</li>
+          </ul>
+          <p class="logout-btn" @click="handleLogoutClick">Logout</p>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -96,6 +98,30 @@ export default Vue.extend({
 
 .logout-btn {
   text-align: center;
+}
+
+// TRANSITION
+
+.drawer-enter-active,
+.drawer-leave-active {
+  &.shadow {
+    transition: background 0.3s ease;
+  }
+
+  .drawer {
+    transition: transform 0.3s ease;
+  }
+}
+
+.drawer-enter,
+.drawer-leave-to {
+  &.shadow {
+    background: transparent;
+  }
+
+  .drawer {
+    transform: translateX(100%);
+  }
 }
 </style>
 
