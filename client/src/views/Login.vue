@@ -22,6 +22,10 @@
         :email="email"
         @back="view = View.Start"
       />
+      <consume-token
+        v-else-if="view === View.Token"
+        @back="view = View.Start"
+      />
     </div>
   </div>
 </template>
@@ -35,12 +39,14 @@ import LoginButtons from '@/components/login/LoginButtons.vue';
 import SignUpForm from '@/components/login/SignUpForm.vue';
 import SignInForm from '@/components/login/SignInForm.vue';
 import LinkSend from '@/components/login/LinkSend.vue';
+import ConsumeToken from '@/components/login/ConsumeToken.vue';
 
 enum View {
   Start,
   SignUp,
   SignIn,
-  LinkSend
+  LinkSend,
+  Token
 }
 
 export default Vue.extend({
@@ -49,7 +55,8 @@ export default Vue.extend({
     LoginButtons,
     SignUpForm,
     SignInForm,
-    LinkSend
+    LinkSend,
+    ConsumeToken
   },
   data: function() {
     return {
@@ -71,7 +78,13 @@ export default Vue.extend({
     }
   },
   mounted: async function() {
-    this.setUser({ user: await loginRequest() });
+    const parsedUrl = new URL(window.location.href);
+    if (parsedUrl.searchParams.has('token')) {
+      this.view = View.Token;
+      this.setUser({ user: null });
+    } else {
+      this.setUser({ user: await loginRequest() });
+    }
   }
 });
 </script>
@@ -86,6 +99,14 @@ export default Vue.extend({
   padding: 10rem 0;
   background-image: url('../assets/bg.png');
   background-size: contain;
+}
+
+.wrapper {
+  position: relative;
+  display: grid;
+  grid-gap: 2rem;
+  width: 27rem;
+  margin: auto;
 }
 
 h1 {

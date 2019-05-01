@@ -60,14 +60,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  position: relative;
-  display: grid;
-  grid-gap: 2rem;
-  width: 67%;
-  margin: auto;
-}
-
 .info-text {
   padding: 0px 1rem;
 }

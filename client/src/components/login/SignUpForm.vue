@@ -61,12 +61,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  display: grid;
-  grid-gap: 2rem;
-  position: relative;
-}
-
 .button {
   justify-self: end;
   margin-top: 2rem;

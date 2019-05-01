@@ -5,7 +5,13 @@
       Couldn't send the sign in mail. Please try again.
     </p>
     <p class="info-text">
-      Sign in link has been send to <span class="email">{{ email }}</span
+      Sign in link has been send to
+      <a
+        :href="`http://www.${email.split('@')[1]}`"
+        target="_blank"
+        class="email"
+      >
+        {{ email }} </a
       >. Follow the link to sign in to the service or resend the sign in email.
     </p>
     <text-button
@@ -56,14 +62,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  display: grid;
-  grid-gap: 2rem;
-  position: relative;
-  width: 67%;
-  margin: auto;
-}
-
 .email {
   color: $color-primary;
   text-decoration: underline;

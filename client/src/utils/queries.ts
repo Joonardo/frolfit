@@ -27,4 +27,10 @@ export const sendTokenLinkMutation = `
   }
 `;
 
+export const tokenLoginMutation = `
+  mutation TokenLogin ($token: String!) {
+    result: consumeLoginToken(token: $token)
+  }
+`;
+
 //#endregion

@@ -5,6 +5,8 @@ import * as query from './queries';
 
 const API_URL = `${window.location.protocol}//${window.location.hostname}:3000/graphql`;
 
+axios.defaults.withCredentials = true;
+
 const sendPost = async (query: string, variables?: object) => {
   const data = await axios.post(API_URL, {
     query,
@@ -29,5 +31,10 @@ export const signupRequest = async (username: string, email: string) => {
 
 export const sendLoginLinkRequest = async (email: string) => {
   const data = await sendPost(query.sendTokenLinkMutation, { email });
+  return <boolean>data.result;
+}
+
+export const tokenLoginRequest = async (token: string) => {
+  const data = await sendPost(query.tokenLoginMutation, { token });
   return <boolean>data.result;
 }
