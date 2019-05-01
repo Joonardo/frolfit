@@ -41,6 +41,7 @@ import SignInForm from '@/components/login/SignInForm.vue';
 import LinkSend from '@/components/login/LinkSend.vue';
 import ConsumeToken from '@/components/login/ConsumeToken.vue';
 
+/* eslint-disable no-unused-vars */
 enum View {
   Start,
   SignUp,
@@ -48,6 +49,7 @@ enum View {
   LinkSend,
   Token
 }
+/* eslint-enable no-unused-vars */
 
 export default Vue.extend({
   name: 'Login',
@@ -107,12 +109,6 @@ export default Vue.extend({
   grid-gap: 2rem;
   width: 27rem;
   margin: auto;
-}
-
-h1 {
-  font-weight: 200;
-  text-align: center;
-  font-size: 8rem;
 }
 
 .content {
