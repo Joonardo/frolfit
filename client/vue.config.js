@@ -1,5 +1,8 @@
 module.exports = {
   lintOnSave: false,
+  devServer: {
+    disableHostCheck: true,
+  },
   css: {
     loaderOptions: {
       sass: {
