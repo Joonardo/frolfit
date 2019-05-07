@@ -46,7 +46,7 @@ export default Vue.extend({
     async handleLogoutClick(): Promise<void> {
       const result = await logoutRequest();
       if (result) {
-        this.setUser({ user: null });
+        (this as any).setUser({ user: null });
         window.location.reload();
       }
     }

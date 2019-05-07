@@ -67,7 +67,7 @@ export default Vue.extend({
     SignUpForm,
     SignInForm,
     LinkSend,
-    ConsumeToken
+    ConsumeToken,
     Tabs,
     Tab,
   },
