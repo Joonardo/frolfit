@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <h1>FROLFIT</h1>
-    <Tabs>
-      <Tab name="Hello">
-        Hello tab!
-      </Tab>
-      <Tab name="Test">
-        We are here
-      </Tab>
-    </Tabs>
+    <keep-alive>
+      <Tabs>
+        <Tab name="Hello">
+          <input>
+        </Tab>
+        <Tab name="Test">We are here</Tab>
+      </Tabs>
+    </keep-alive>
     <div class="content" v-if="user === null">
       <login-buttons
         v-if="view === View.Start"
@@ -25,15 +25,8 @@
         @back="view = View.Start"
         @submitSuccess="handleSubmitSuccess"
       />
-      <link-send
-        v-else-if="view === View.LinkSend"
-        :email="email"
-        @back="view = View.Start"
-      />
-      <consume-token
-        v-else-if="view === View.Token"
-        @back="view = View.Start"
-      />
+      <link-send v-else-if="view === View.LinkSend" :email="email" @back="view = View.Start"/>
+      <consume-token v-else-if="view === View.Token" @back="view = View.Start"/>
     </div>
   </div>
 </template>
@@ -69,7 +62,7 @@ export default Vue.extend({
     LinkSend,
     ConsumeToken,
     Tabs,
-    Tab,
+    Tab
   },
   data: function() {
     return {

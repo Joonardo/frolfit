@@ -1,9 +1,7 @@
 <template>
   <div>
     <div id="header">
-      <button v-for="(tab, idx) in tabs" :key="idx" @click="select(idx)">
-        {{ tab.name }}
-      </button>
+      <button v-for="(tab, idx) in tabs" :key="idx" @click="select(idx)">{{ tab.name }}</button>
     </div>
     <div id="content">
       <slot></slot>
@@ -34,8 +32,8 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.tabs = this.$children as any;
+    this.tabs = (this as any).$slots.default.map((v: any) => v.componentInstance) as any;
     this.tabs[this.current].show();
-  },
+  }
 });
 </script>

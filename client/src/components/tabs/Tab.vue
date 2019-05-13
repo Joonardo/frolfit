@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 
 export default Vue.extend({
   props: {
@@ -12,7 +12,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      visible: false,
+      visible: false
     };
   },
   methods: {
@@ -23,5 +23,5 @@ export default Vue.extend({
       this.visible = false;
     }
   }
-})
+});
 </script>
