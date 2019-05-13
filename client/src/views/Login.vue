@@ -1,14 +1,6 @@
 <template>
   <div class="container">
     <h1>FROLFIT</h1>
-    <keep-alive>
-      <Tabs>
-        <Tab name="Hello">
-          <input>
-        </Tab>
-        <Tab name="Test">We are here</Tab>
-      </Tabs>
-    </keep-alive>
     <div class="content" v-if="user === null">
       <login-buttons
         v-if="view === View.Start"
