@@ -19,8 +19,8 @@ CREATE TABLE course (
 CREATE TYPE GAMESTATE AS ENUM('pending', 'ongoing', 'ended');
 CREATE TABLE game (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  "courseId" UUID REFERENCES course(id),
-  creator UUID REFERENCES player(id),
+  "courseId" UUID REFERENCES course(id) DEFAULT NULL,
+  "creatorId" UUID REFERENCES player(id),
   state GAMESTATE DEFAULT 'pending'
 );
 

@@ -74,14 +74,20 @@ export class PlayerResolver implements ResolverInterface<Player> {
   ) {}
 
   @Query(returns => Player, { nullable: true })
-  me(@Ctx() ctx: Context): Promise<Player | null> {
-    return this.playerService.getById(ctx.state.user.id, ctx.state.getTx());
+  me(@Ctx() { state }: Context): Promise<Player | null> {
+    if (!state.user) {
+      return null;
+    }
+    return this.playerService.getById(state.user.id, state.getTx());
   }
 
   @FieldResolver(returns => String)
-  email(@Root() { id, email }: Player, @Ctx() { state }: Context): string {
+  email(
+    @Root() { id, email }: Player,
+    @Ctx() { state }: Context
+  ): string | null {
     if (!state.user || state.user.id !== id) {
-      return '';
+      return null;
     }
     return email;
   }

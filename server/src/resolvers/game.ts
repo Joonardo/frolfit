@@ -61,14 +61,21 @@ class GameArgs {
 }
 
 @ArgsType()
-class CreateGameArgs {
+export class UpdateGameArgs {
   @Field(type => String)
-  courseId: string;
+  id: string;
+
+  @Field(type => String, { nullable: true })
+  course: string;
+
+  @Field(type => GameState, { nullable: true })
+  state: GameState;
 }
 
 @ObjectType()
 export class Game {
   courseId: string;
+  creatorId: string;
 
   @Field(type => ID)
   id: string;
@@ -76,7 +83,10 @@ export class Game {
   @Field(type => GameState)
   state: GameState;
 
-  @Field(type => Course)
+  @Field(type => Player)
+  creator: Player;
+
+  @Field(type => Course, { nullable: true })
   course: Course;
 
   @Field(type => [Player])
@@ -95,6 +105,14 @@ export class GameResolver implements ResolverInterface<Game> {
     private readonly courseService: CourseService,
     private readonly resultService: ResultService
   ) {}
+
+  @FieldResolver(returns => Player)
+  creator(
+    @Root() { creatorId }: Game,
+    @Ctx() { state }: Context
+  ): Promise<Player> {
+    return this.playerService.getById(creatorId, state.getTx());
+  }
 
   @FieldResolver(returns => [Player])
   players(@Root() { id }: Game, @Ctx() { state }: Context): Promise<Player[]> {
@@ -134,24 +152,47 @@ export class GameResolver implements ResolverInterface<Game> {
   }
 
   @Mutation(returns => Game, { nullable: true })
-  async createGame(
-    @Args() { courseId }: CreateGameArgs,
-    @Ctx() { state }: Context
-  ): Promise<Game> {
+  async createGame(@Ctx() { state }: Context): Promise<Game> {
     if (!state.user) {
       return null;
     }
     try {
-      const game = await this.gameService.create(
-        courseId,
+      const game = await this.gameService.getPending(
         state.user.id,
         state.getTx()
       );
-      return game;
+      if (game) {
+        return game;
+      }
+      return this.gameService.create(state.user.id, state.getTx());
     } catch (e) {
       console.error(e);
       return null;
     }
+  }
+
+  @Mutation(returns => Game, { nullable: true })
+  async updateGame(
+    @Ctx() { state }: Context,
+    @Args() update: UpdateGameArgs
+  ): Promise<Game> {
+    if (!state.user) {
+      return null;
+    }
+
+    const game = await this.gameService.getById(update.id, state.getTx());
+    if (!game || game.state === GameState.ENDED) {
+      return null;
+    }
+    if (game.creatorId !== state.user.id) {
+      console.error(
+        `Authorization failed: Player ${state.user.id} is not creator of game ${
+          update.id
+        }`
+      );
+      return null;
+    }
+    return this.gameService.update(update, state.getTx());
   }
 
   @Mutation(returns => Boolean)

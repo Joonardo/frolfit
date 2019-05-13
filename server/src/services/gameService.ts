@@ -1,6 +1,7 @@
 import { ITask } from 'pg-promise';
-import { Game, GameState } from '../resolvers/game';
+import { Game, GameState, UpdateGameArgs } from '../resolvers/game';
 import { Player } from '../resolvers/player';
+import { pgp, NULL } from '../common/db.util';
 
 export default class GameService {
   getById(id: string, tx: ITask<{}>): Promise<Game> {
@@ -34,6 +35,15 @@ export default class GameService {
     );
   }
 
+  getPending(pid: string, tx: ITask<{}>): Promise<Game | null> {
+    return tx.oneOrNone(
+      `
+        select * from game where "creatorId" = $(pid) and state = 'pending'
+      `,
+      { pid }
+    );
+  }
+
   getPlayers(id: string, tx: ITask<{}>): Promise<Player[]> {
     return tx.any(
       `
@@ -48,25 +58,41 @@ export default class GameService {
     );
   }
 
-  async create(
-    courseId: string,
-    playerId: string,
-    tx: ITask<{}>
-  ): Promise<Game> {
+  async create(playerId: string, tx: ITask<{}>): Promise<Game> {
     const game = await tx.one(
       `
-        insert into game(creator, "courseId")
+        insert into game("creatorId")
         values (
-          $(playerId),
-          $(courseId)
+          $(playerId)
         )
         returning *
       `,
-      { playerId, courseId }
+      { playerId }
     );
     const ok = await this.participate(game.id, playerId, tx);
 
     return ok ? game : null;
+  }
+
+  async update(
+    update: UpdateGameArgs,
+    tx: ITask<{}>
+  ): Promise<Game> {
+    return tx.oneOrNone(
+      pgp.as.format(
+        `
+          update game
+          set
+            "courseId" = $(course),
+            state = $(state)
+          where
+            id = $(id)
+          returning *
+        `,
+        update,
+        { def: NULL }
+      )
+    );
   }
 
   async participate(
